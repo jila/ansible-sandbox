@@ -1,0 +1,13 @@
+--- # Loops
+- hosts: webhosts
+  user: test
+  connection: ssh
+  sudo: yes
+  gather_facts: no
+
+  tasks:
+    - name: Add list of users
+      user: name={{ item }} state=present
+      with_items:
+        - user1
+        - user2

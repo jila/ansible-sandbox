@@ -1,0 +1,22 @@
+--- # DEPLOY 
+- hosts: debianhost
+  user: test
+  sudo: yes
+  connection: ssh
+  
+  tasks:
+    - name: Install lynx package
+      apt: pkg=lynx state=present
+    - name: Determine if the telnet package is installed
+      apt: pkg=telnet state=latest update_cache=yes
+
+- hosts: webhosts
+  user: test
+  sudo: yes
+  connection: ssh
+
+  tasks:
+    - name: install the telnet package
+      yum: pkg=telnet state=present
+    - name: Determine if the lynx package is installed
+      yum: pkg=lynx state=latest update_cache=yes
