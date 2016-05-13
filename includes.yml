@@ -1,0 +1,9 @@
+--- # Includes
+- hosts: all
+  connection: ssh
+  user: test
+  become: true
+  gather_facts: yes
+
+  tasks:
+    - include: plays/task.yml 

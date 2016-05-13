@@ -1,0 +1,9 @@
+--- # Lookup
+- hosts: debianhost
+  user: test
+  become: yes
+  gather_facts: no 
+
+  tasks:
+    - debug: msg="Display a JSON formatted debug message that will show the remote environment HOME variable {{ lookup('env', 'HOME') }} is the value listed" 
+

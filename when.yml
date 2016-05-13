@@ -1,0 +1,19 @@
+--- # Conditions
+- hosts: debianhost
+  user: test
+  connection: ssh
+  sudo: yes
+  
+  vars:
+    playbook_type: conditionalexample
+  vars_files:
+    - conf/copyright.yml
+    - conf/webdefaults.yml  
+  
+ tasks:
+    - name: Installs the Apache Web Server ( Dedian )
+      apt: pkg=apache2 state=latest
+      when: "ansible_os_family == 'Debian'"
+    - name: Installs the Apache Web Server ( RedHat )
+      yum: pkg=httpd state=present
+      when: "ansible_os_family == 'RedHat'"

@@ -1,0 +1,10 @@
+--- # Local Action
+- hosts: localhost
+  user: test
+  connection: local
+  become: yes
+  gather_facts: no
+
+  tasks: 
+    - name: Install telnet client
+      yum: pkg=telnet state=present

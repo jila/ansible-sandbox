@@ -1,0 +1,12 @@
+--- # Ron Once
+- hosts: all
+  user: test
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Runs the remote uptime command and logs it to the remote /home/test directory in a file called uptime.log
+      raw: uptime >> /home/test/uptime.log
+    - name: ist the remote /var directory and pipe the output to the /home/test directory in a file called dir.list
+      raw: ls -lash /var >>  /home/test/dir.list
+      run_once: true
