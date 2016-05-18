@@ -7,3 +7,10 @@
 
   tasks:
     - include: plays/task.yml 
+    - name: verify the telnet package was installed (Debian)
+      raw: dpkg --get-selections | grep -v deinstall | grep telnet >> /home/test/pkgs.log
+      when: "ansible_os_family == 'Debian'"
+    - name: verify the telnet package was installed (RedHat)
+      raw: yum list installed | grep telnet >> /home/test/pkgs.log
+      when: "ansible_os_family == 'RedHat'"
+

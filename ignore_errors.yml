@@ -1,0 +1,15 @@
+--- # Ignore Errors
+- hosts: debianhost
+  user: test
+  become: yes
+  connection: ssh
+  gather_facts: no
+
+  tasks:
+    - name: Run a command on the remote server that will ALWAYS fail
+      shell: systemctl status apache2
+      ignore_errors: yes
+    - name: Install telnet
+      apt: pkg=telnet state=latest
+  
+

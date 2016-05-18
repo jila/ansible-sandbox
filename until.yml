@@ -1,0 +1,28 @@
+--- # Until
+- hosts: all
+  user: test
+  connection: ssh
+  become: yes
+  
+  tasks:
+    - name: install Apache web server 
+      yum: pkg=httpd state=latest
+      when: "ansible_os_family == 'RedHat'"
+    - name: Verify that the systemctl status command shows the httpd service is running
+      shell: systemctl status httpd
+      register: result
+      until: result.stdout.find("active (running)") != -1
+      retries: 7
+      delay: 5
+    - debug: var=result         
+    
+    - name: install Apache web server (Debian) 
+      apt: pkg=apache2 state=latest
+      when: "ansible_os_family == 'Debian'"
+    - name: Verify that the systemctl status command shows the httpd service is running
+      shell: sysctl status httpd
+      register: resultd
+      until: resultd.stdout.find("active (running)") != -1
+      retries: 7
+      delay: 5
+    - debug: var=resultd 

@@ -1,0 +1,19 @@
+--- # Tags run : ansible-playbook tags.yml --tags "packages" OR  ansible-playbook tags.yml --skip-tags "logging"
+- hosts: all
+  connection: ssh
+  user: test
+  become: true
+
+  tasks:
+    - name:  install the telnet and lynx packages
+      yum : pkg={{ item }} state=latest
+      with_items:
+        - telnet
+        - lynx
+      tags: packages
+      when: "ansible_os_family == 'RedHat'"
+    - name: Verify that telnet was installed
+      raw: yum list installed | grep telnet >> /home/test/pkg.log
+      when: "ansible_os_family == 'RedHat'"
+      tags:
+        - logging
